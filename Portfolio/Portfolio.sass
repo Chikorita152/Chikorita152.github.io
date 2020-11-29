@@ -1,0 +1,889 @@
+$Arrow-Left: "\25C4"
+$Arrow-Right: "\25BA"
+$Scroll-Title: "商品廣告Banner"
+$Tab-Title: "商品攝影修圖"
+$Photo-Title: "影像編輯"
+$LINE-Title: "LINE貼圖"
+$Collapse-Title: "擅長技能"
+
+@mixin media($screen)
+    @if $screen == PC
+        @media screen and ( min-width: 769px )
+            @content
+    
+    @if $screen == minW-1025
+        @media screen and ( min-width: 1025px )
+            @content
+
+    @if $screen == Pad
+        @media screen and ( max-width: 1024px )
+            @content
+    
+    @if $screen == PadtoM
+        @media screen and ( max-width: 1023px )
+            @content
+
+    @if $screen == Mobile
+        @media screen and ( max-width: 768px )
+            @content
+
+%button-Arrow
+    position: absolute
+    color: white
+%Scroll-Box
+    overflow: 
+        x: auto
+        y: hidden
+    white-space: nowrap
+    text-align: center
+%Cover-Box
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 100
+    display: flex
+    justify-content: center
+    align-items: center
+
+*
+    box-sizing: border-box
+
+*:link, *:visited, ::before, ::after, a:hover
+    color: inherit
+    text-decoration: none
+
+body
+    margin:
+        left: 0
+        right: 0
+        top: 0
+        bottom: 0
+    padding: 
+        left: 0
+        right: 0
+        top: 0
+        bottom: 0
+    overflow:
+        x: hidden
+        y: auto
+    font:
+        size: 16px
+        family: "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif
+    color: #333
+
+    >span
+        background:
+            image: url('images/load.gif')
+            repeat: no-repeat
+            position: center
+            color: white
+        @extend %Cover-Box
+
+
+html
+    scroll-behavior: smooth
+
+input
+    display: none
+
+button, label
+    cursor: pointer
+    text-align: center
+
+button
+    background: transparent
+    border: none
+    padding: 0
+
+    &:focus
+            outline: none
+marquee
+    color: white 
+    background-color: black
+    margin-bottom: -4px
+
+header
+    padding: 0 calc( (100% - 1024px) / 2 )
+    background: 
+        color: black
+
+
+
+.youtube
+    position: relative
+    padding:
+        bottom: 56.25% //為影片高度與寬度的比例16:9計算得來，9除以16=0.5625換算高度比0.5625=56.25%
+        top: 30px //用於修正的高度，可用25px或30px
+    height: 0
+    overflow: hidden
+
+    @include media(Pad)
+        padding:
+            bottom: 56.25%
+
+    iframe, object, embed
+        position: absolute
+        top: 0
+        left: 0
+        margin: 0 auto
+        width: 100%
+        height: 100%
+
+%nav-active
+    background: 
+        color: #00a8ea
+    color: white
+    transition: all .25s
+
+%nav-fixed
+    position: fixed
+    top: -1px
+    left: 0
+    right: 0
+    z-index: 90
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .2)
+
+nav
+    overflow: 
+        x: auto
+        y: hidden
+    white-space: nowrap
+    text-align: center
+    line-height: 2
+    background: 
+        color: #c5f2ff
+    color: #00a8ea
+    font:
+        size: 1.2em
+        weight: bold
+    padding: 0 calc( (50% - 512px )
+
+    &.fixed
+        @extend %nav-fixed
+        &+*
+            margin-top: 54px
+
+    a
+        display: inline-block
+        width: 20%
+        min-width: 180px
+        padding: 8px 12px
+        @include media(minW-1025)
+            &:hover
+                background: 
+                    color: #00a8ea
+                color: white
+                transition: all .25s
+
+        &.active
+            @extend %nav-active
+
+    [href$="Tab"]::before
+        content: $Tab-Title
+    [href$="Photo"]::before
+        content: $Photo-Title
+    [href$="Collapse"]::before
+        content: $Collapse-Title
+    [href$="LINE"]::before
+        content: $LINE-Title
+    [href$="Scroll"]::before
+        content: $Scroll-Title
+
+aside
+    position: fixed
+    bottom: 2vh
+    right: 0
+    width: 32px
+    z-index: 90
+    margin-right: 16px
+    @include media(Pad)
+        width: 40px
+
+    img
+        padding: 2px 8px
+        @include media(minW-1025)
+            &:hover
+                padding:
+                    left: 0
+                    right: 16px
+
+
+article
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+
+$section-padding: 12px
+section
+    padding: $section-padding 0
+    width: 100%
+
+    h2
+        margin: 0 auto
+        line:
+            height: 1.5
+        padding:
+            top: 50px
+            bottom: 8px
+
+
+$Label-color: #bef9e6
+.Tab
+    position: relative
+
+    h2
+        &::before
+            content: $Tab-Title
+    
+    #Tab1:checked~.Tab1,
+    #Tab2:checked~.Tab2,
+    #Tab3:checked~.Tab3,
+    #Tab4:checked~.Tab4,
+    #Tab5:checked~.Tab5,
+    #Tab6:checked~.Tab6,
+    #Tab7:checked~.Tab7
+        position: relative
+        left: 0
+        right: 0
+        top: 0
+        z-index: 1
+        transition: left .5s
+    
+    @include media(minW-1025)
+        #Tab1:not(:checked):hover~.Tab1,
+        #Tab2:not(:checked):hover~.Tab2,
+        #Tab3:not(:checked):hover~.Tab3,
+        #Tab4:not(:checked):hover~.Tab4,
+        #Tab5:not(:checked):hover~.Tab5,
+        #Tab6:not(:checked):hover~.Tab6,
+        #Tab7:not(:checked):hover~.Tab7
+            position: absolute
+            left: 0
+            right: 0
+            z-index: 2
+            transition: left .5s
+
+        [for="Tab1"]:hover,
+        [for="Tab2"]:hover,
+        [for="Tab3"]:hover,
+        [for="Tab4"]:hover,
+        [for="Tab5"]:hover,
+        [for="Tab6"]:hover,
+        [for="Tab7"]:hover
+            color: $Label-color
+            transition: color .25s
+    
+    #Tab1:checked~div>[for="Tab1"],
+    #Tab2:checked~div>[for="Tab2"],
+    #Tab3:checked~div>[for="Tab3"],
+    #Tab4:checked~div>[for="Tab4"],
+    #Tab5:checked~div>[for="Tab5"],
+    #Tab6:checked~div>[for="Tab6"],
+    #Tab7:checked~div>[for="Tab7"]
+        background: 
+            color: white
+        border:
+            radius: 12px 12px 0 0
+        font:
+            weight: bolder
+        color: teal
+
+    
+    div
+        @extend %Scroll-Box
+        background: 
+            color: teal
+        line:
+            height: 2.4
+        font:
+            size: 1.1em
+        color: white
+        padding: 0 12px
+        margin-bottom: -2px
+
+        @include media(Mobile)
+            border: 16px solid teal
+                top: none
+                bottom: none
+
+            &::before, &::after
+                position: absolute
+                line-height: 42px
+                margin-top: 12px
+                font-size: .4em
+                color: $Label-color
+
+            &::before
+                content: $Arrow-Left
+                left: 0
+            &::after
+                content: $Arrow-Right
+                right: 0
+
+        >label
+            display: inline-block
+            width: calc( 100% / 7 )
+            padding: 0 12px
+            min:
+                width: 120px
+            margin:
+                top: 12px
+            
+    
+    figure
+        width: 100vw
+        display: flex
+        flex:
+            wrap: wrap
+        justify:
+            content: center
+        align:
+            items: center
+        margin: 0
+        padding: 4%
+        position: absolute
+        left: -100vw
+        right: 100vw
+        top: 158px
+        transition: right .5s, left .5s
+        background: 
+            color: white
+        
+        img
+            object-fit: contain
+            padding: 12px
+            max:
+                width: 25%
+                height: 240px
+
+            @include media(Pad)
+                max:
+                    height: 18vh
+
+            @include media(Mobile)
+                max:
+                    width: 50%
+                    height: 20vh
+
+%halfBox
+    display: flex
+    flex-wrap: wrap
+    width: 480px
+    flex-grow: 1
+    position: relative
+
+    h2
+        border-bottom: 1px solid lightblue
+        width: 100%
+        text-align: center
+        align-self: baseline
+
+    @include media(PC)
+        margin: 0 12px
+
+.Photo
+    @extend %halfBox
+
+    h2
+        &::before
+            content: $Photo-Title
+        
+    div, figure
+        width: 100%
+        max-width: 100vw
+        display: flex
+        align-items: center
+        margin: 0
+
+    @include media(minW-1025)
+        div, figure
+            flex-wrap: wrap
+            justify-content: center
+            padding: 0 1%
+
+        div
+            position: absolute
+            top: 107px
+            left: 0
+
+        img, label
+            width: calc( 94% / 3 )
+            height: 180px
+            margin: 1%
+            object-fit: cover
+
+        label
+            &:hover
+                background-image: url() !important
+        
+
+    img, label
+        display: block
+        object-fit: cover
+        background: 
+            repeat: no-repeat
+            size: cover
+            position: center
+    
+    @include media(Pad)
+        #Photo0:checked~figure>img:not(.Photo0),
+        #Photo0:checked~div>[for="Photo0"]::before,
+        #Photo1:checked~figure>img:not(.Photo1),
+        #Photo1:checked~div>[for="Photo1"]::before,
+        #Photo2:checked~figure>img:not(.Photo2),
+        #Photo2:checked~div>[for="Photo2"]::before,
+        #Photo3:checked~figure>img:not(.Photo3),
+        #Photo3:checked~div>[for="Photo3"]::before,
+        #Photo4:checked~figure>img:not(.Photo4),
+        #Photo4:checked~div>[for="Photo4"]::before,
+        #Photo5:checked~figure>img:not(.Photo5),
+        #Photo5:checked~div>[for="Photo5"]::before
+            display: none
+        
+        div
+            order: 1
+            overflow:
+                x: auto
+                y: hidden
+
+        label
+            min-width: 45%
+            padding: 15% 0
+            position: relative
+            &::before
+                content: ""
+                position: absolute
+                top: 0
+                bottom: 0
+                left: 0
+                right: 0
+                background-color: rgba(0, 0, 0, .8)
+        
+        img
+            width: 90%
+            height: auto
+            margin: 5%
+            
+
+.Collapse
+    @extend %halfBox
+    
+    h2
+        &::before
+            content: $Collapse-Title
+
+    >ul
+        margin: 1%
+        padding: 0
+        flex-grow: 1
+        height: calc( 98% - 95px )
+        border: 1px solid $Label-color
+        font-size: 1.2em
+        @include media(PadtoM)
+            height: auto !important
+
+        &>*
+            padding: 0 1%
+
+        
+        input:checked+label+li
+            min-height: calc( 100% - ( 38px * 4 ) )
+
+            @include media(PadtoM)
+                min-height: 0
+                max-height: 100%
+
+        input:checked+label::after
+                content: "-"
+
+        label
+            display: block
+            text-align: left
+            background: 
+                color: $Label-color
+            color: teal
+            line-height: 2
+            &::after
+                content: "+"
+                float: right
+            &::after, &::before
+                width: 16px
+                text-align: center
+
+        li
+            list-style: none
+            display: flex
+            justify-content: center
+            align-items: flex-start
+            flex-wrap: wrap
+            overflow: hidden
+            max-height: 0
+            min-height: 0
+            transition: all .5s
+
+        img
+            width: calc( 25%  - 24px )
+            max:
+                width: 50px
+            margin: 4px 12px
+            align-self: center
+            object-fit: contain
+        
+        @include media(Pad)
+            margin:
+                top: 5%
+                bottom: 0
+            height: calc( 96% - 95px)
+
+
+$PX160: 160px
+.LINE
+    background-color: #d2f5ff
+    padding: 0
+
+    h2
+        border-top: 12px solid white
+        background-color: white
+        &::before
+           content: $LINE-Title
+    div
+        @extend %Scroll-Box
+        @include media(Mobile)
+            padding: 12px 8px
+
+        img
+            width: $PX160
+            height: $PX160
+            border-radius: 50%
+            margin: 1.2%
+            border: .16em solid #a8e7ff
+            @include media( Pad )
+                width: $PX160 / 1.6
+                height: $PX160 / 1.6
+
+$Arrow-HM: 25px
+$Scroll-H: 185px
+.Scroll
+    position: relative
+
+    h2
+        &::before
+            content: $Scroll-Title
+
+    figure
+        @extend %Scroll-Box
+        display: flex
+        margin: 0
+        max:
+            height: $Scroll-H
+        >img
+            max:
+                height: inherit
+            @include media(PC)
+                &:hover
+                    cursor: url(images/viewImg.png),auto
+
+            &+img
+                margin: 
+                    left: 12px
+
+    button
+        @extend %button-Arrow
+        bottom: $section-padding
+        height: $Scroll-H
+        width: 32px
+        background:
+            color: rgba(0, 0, 0, .5)
+        z-index: 2
+        text:
+            shadow: 0px 2px 0 rgba(0, 0, 0, .5)
+        font:
+            size: 1.4em
+        opacity: .8
+
+        @include media(Mobile)
+            width: 50%
+            height: $Arrow-HM
+            bottom: $section-padding * -1
+            border:
+                width: 1px
+                color: rgba(0, 0, 0, .5)
+                style: solid
+                top: none
+                bottom: none
+        @include media(PC)
+            &:hover
+                opacity: 1
+
+        &.goLeft
+            left: 0
+            border-left: none
+            @include media(PC)
+                display: none
+
+            &::before
+                content: $Arrow-Left
+
+        &.goRight
+            right: 0
+            border-right: none
+            
+            &::before
+                content: $Arrow-Right
+
+
+$bottom-width: 50px
+%forArrow
+    width: 50%
+    padding: 0 12px
+
+.viewBox
+    display: none
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    z-index: 99
+    background:
+        color: rgba(0, 0, 0, .9)
+    text:
+        align: center
+    
+    figure
+        width: 100%
+        height: 100%
+        margin: 0
+        display: flex
+        justify:
+            content: center
+        align:
+            items: center
+    
+    img
+        display: none
+        max:
+            width: 100%
+    
+    button
+        @extend %button-Arrow
+        z-index: 2
+        font:
+            size: 1.4em
+        width: $bottom-width
+
+    .nextImg, .backImg
+        top: 0
+        bottom: 0
+        @extend %forArrow
+    
+    .nextImg
+        right: 0
+        text:
+            align: right
+        &::before
+            content: $Arrow-Right
+
+    .backImg
+        left: 0
+        text:
+            align: left
+
+        &::before
+            content: $Arrow-Left
+    
+    .closeViewBox
+        bottom: 0
+        height: $bottom-width
+        margin: 
+            bottom: 16px
+        background: 
+            color: rgba(0,0,0,.5 )
+        border:
+            radius: $bottom-width / 2
+        transition: margin-bottom .5s
+        
+        @include media(PC)
+            &:hover
+                margin:
+                    bottom: 28px
+
+        &::before
+            content: "\00D7"
+
+
+$img-marginT: 100px 
+footer
+    background: 
+        color: #dddddd
+    text-align: center
+    margin: 
+        top: $img-marginT
+    padding:
+        bottom: 4px
+    
+    >div
+        position: relative
+        img
+            width: 200px
+            height: 200px
+            border-radius: 100px
+            object-fit: cover
+            margin: 
+                top: - $img-marginT
+                bottom: -4px
+        >div
+            width: 202px
+            height: 202px
+            border: 4px solid white
+                radius: 100px
+            position: absolute
+            bottom: 0
+            padding: 1em 0
+            margin: 0 calc( 50% - 100px )
+            display: flex
+            flex-direction: column
+            justify-content: flex-end
+            color: white
+            font-size: .8em
+            background-color: rgba(0, 0, 0, .5)
+            >p
+                &:first-child
+                    font-size: 1.6em
+                margin: 0
+    >ul
+        margin: 0
+        padding: 0
+
+        >dl
+            width: 100%
+            padding: 0 calc(50% - 512px)
+            margin: 1em 0
+        
+            @include media(Mobile)
+                padding: 0 4%
+
+            &:first-child
+                column:
+                    count: 2
+                    rule: 2px solid #bbbbbb
+                text-align: right
+                @include media(Mobile)
+                    column:
+                        count: 1
+                    text-align: center
+               
+                dt:nth-of-type(3),dt:nth-of-type(3)~dd
+                    text-align: left
+                    @include media(Mobile)
+                        text-align: center
+            
+            &:last-child
+                line-height: 2
+                background-color: #bbbbbb
+                margin:
+                    top: 2.0em
+
+                >dt
+                    position: relative
+                    top: -16px
+                    margin: 0 auto -12px
+                    background-color: inherit
+                    width: 150px
+                    border-radius: 8px
+                
+                >div
+                    display: flex
+                    justify-content: center
+                    flex-wrap: wrap
+                    padding-bottom: 12px
+                    @include media(Mobile)
+                        padding: 0 calc( 50% - 207px )
+
+                    >dd
+                        display: inline-block
+                        background-color: white
+                        width: 130px
+                        height: 120px
+                        margin: 4px
+                        overflow: hidden
+                        border: 1px solid mistyrose
+                            radius: 8px
+                        line-height: 1.5
+                        font-size: 13px
+                        color: #aaaaaa
+
+                        &::before
+                            background-color: mistyrose
+                            display: block
+                            color: lightcoral
+                            margin-bottom: 4px
+                            font-size: 1.2em
+
+                    
+                    .code::before
+                        content: "網頁設計"
+                    
+                    .publish::before
+                        content: "平面設計"
+                    
+                    .image::before
+                        content: "影像剪輯"
+                    
+                    .paint::before
+                        content: "電腦繪圖"
+                    
+                    .threeD::before
+                        content: "3D建模"
+                    
+                    .office::before
+                        content: "文書處理"
+                        
+
+            dt
+                font-weight: bolder
+    
+            dd
+                margin: 0
+
+                &+dt
+                    margin-top: 4px
+.stop5min
+    @extend %Cover-Box
+    display: none
+
+    >div
+        width: 80%
+        height: 80%
+        max:
+            width: 400px
+            height: 400px
+        background-color: white
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .2)
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        h4
+            color: dodgerblue
+            margin:
+                top: auto
+                bottom: 8px
+            font-size: 1.2em
+        span
+            width: 90%
+            color: darkgray
+        a
+            color: hotpink
+            text-decoration: underline
+            margin: 1em
+        button
+            background-color: powderblue
+            color: aliceblue
+            font-size: 1.2em
+            width: 200px
+            line-height: 1.6
+            margin: 12px
+                top: auto
