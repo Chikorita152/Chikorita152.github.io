@@ -1,0 +1,190 @@
+@import '../../scss/cssProperties/background';
+@import '../../scss/cssProperties/percent';
+@import '../../scss/cssProperties/mixin';
+@import '../../scss/cssProperties/animation';
+@mixin pattern-plaid-slash($deg, $color) {
+    background: //
+    repeating-linear-gradient($deg, $color), //
+    repeating-linear-gradient(-$deg, $color);
+}
+
+@mixin pattern-plaid-beeline($deg, $color) {
+    background: //
+    repeating-linear-gradient($deg, $color), //
+    repeating-linear-gradient($deg - 90, $color);
+}
+
+@mixin load-line($height, $animation, $range, $duration) {
+    height: $height;
+    border-radius: $height / 2;
+    overflow: hidden;
+    .animate {
+        height: $height * 3;
+        width: calc( 100vw + #{$range});
+        @include animation($animation, $duration, linear, 0s, infinite, normal, none, running)
+    }
+    @keyframes translateY {
+        0% {
+            transform: translateY(-$range);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+    @keyframes translateX {
+        0% {
+            transform: translateX(-$range);
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+}
+
+.gradient {
+    @extend %reset-list;
+    display: inline-block;
+    width: 100%;
+}
+
+.demo {
+    @include square(120px);
+    float: left;
+    $range1: 25%;
+    $range2: 50%;
+    $range3: 75%;
+    &1 {
+        $draw: #aaffb1, #ffffb6 $range1, #ffd8c2 $range1, #ffffb6;
+        background-image: linear-gradient(0.375turn, $draw);
+    }
+    &2 {
+        $draw: #c1d5ff, #8cd5ff $range2, #74c7ff $range2, #dccaff;
+        background-image: linear-gradient(135deg, $draw);
+    }
+    &3 {
+        $draw: #ffc1c1, #fffecc $range3, #9fd9ff $range3, #caffe4;
+        background-image: linear-gradient(map-get(map-get($path, to), top), $draw);
+    }
+    &4 {
+        $color2: transparent 55%;
+        background: //
+        linear-gradient(map-get(map-get($path, to), top), rgba(255, 161, 161, 0.8), $color2), //
+        linear-gradient(map-get(map-get($path, to), right), rgba(175, 246, 255, 0.8), $color2), //
+        linear-gradient(map-get(map-get($path, to), bottom), rgba(169, 255, 188, 0.8), $color2), //
+        linear-gradient(map-get(map-get($path, to), left), rgba(255, 254, 176, 0.8), $color2);
+    }
+    &5 {
+        $colors: rgba(255, 255, 255, 0.5), #74dfff;
+        $range: 20px;
+        $draw: nth($colors, 1) $range, transparent $range, transparent $range * 2;
+        background: //
+        radial-gradient(map-get(map-get($shapes, circle), center), $draw), // 
+        radial-gradient(map-get(map-get($shapes, circle), top), $draw), // 
+        radial-gradient(map-get(map-get($shapes, circle), right), $draw), // 
+        radial-gradient(map-get(map-get($shapes, circle), bottom), $draw), // 
+        radial-gradient(map-get(map-get($shapes, circle), left), $draw), // 
+        nth($colors, 2)
+    }
+    &6 {
+        $shapes: map-get($shapes, circle);
+        $range1: 21%;
+        background: //
+        radial-gradient(map-get($shapes, num) 75% 20px, black $range1, transparent $range1), //
+        radial-gradient(map-get($shapes, num) 20px 75%, black $range1, transparent $range1), //
+        radial-gradient(map-get($shapes, bottom), black $range2, transparent $range2), //
+        gray;
+    }
+    &7 {
+        $colors: #ffe9c7, #ffd9fc, #fffbc8;
+        $shapes: map-get($shapes, circle);
+        $draw: nth($colors, 1) $range2, nth($colors, 2) $range2, nth($colors, 2) $range3, nth($colors, 3) $range3;
+        background: //
+        radial-gradient(map-get($shapes, north), $draw);
+    }
+    &8 {
+        $shapes: map-get($shapes, ellipse);
+        background: //
+        radial-gradient(map-get($shapes, north), #ffc1c1 $range1, transparent), // 
+        radial-gradient(map-get($shapes, south), #99dfff $range1, transparent);
+    }
+    &9 {
+        $colors: #fff4d1, #e7ffdd, #ffebfd;
+        $range: 12px;
+        $draw: nth($colors, 1) $range * 0, nth($colors, 1) $range * 1, nth($colors, 2) $range * 1, nth($colors, 2) $range * 2, nth($colors, 3) $range * 2, nth($colors, 3) $range * 3;
+        background-image: //
+        repeating-linear-gradient(0.25turn, $draw);
+    }
+    &10 {
+        $colors: #ffe7fe, #ddfdff, #fffbd2;
+        $range: 12px;
+        background-image: //
+        repeating-linear-gradient(135deg, nth($colors, 1), nth($colors, 1) $range, nth($colors, 2) $range, nth($colors, 2) $range * 2, nth($colors, 3) $range * 2, nth($colors, 3) $range * 3);
+    }
+    &11 {
+        $colors: rgba(162, 213, 255, 0.5), rgba(255, 255, 255, 0.5);
+        $range: 12px;
+        $pattem: nth($colors, 1), nth($colors, 1) $range, nth($colors, 2) $range, nth($colors, 2) $range * 2;
+        @include pattern-plaid-slash(45deg, $pattem);
+    }
+    &12 {
+        $colors: rgba(255, 162, 162, 0.5), rgba(255, 255, 255, 0.5);
+        $range: 12px;
+        $pattem: nth($colors, 1), nth($colors, 1) $range, nth($colors, 2) $range, nth($colors, 2) $range * 2;
+        @include pattern-plaid-beeline(90deg, $pattem);
+    }
+    &13 {
+        $colors: rgba(255, 242, 170, 0.25) #ffb68b;
+        $range: 1px;
+        background: //
+        repeating-radial-gradient(map-get(map-get($shapes, circle), top), nth($colors, 1), nth($colors, 1) $range, transparent $range, transparent $range * 4), //
+        repeating-radial-gradient(map-get(map-get($shapes, circle), right), nth($colors, 1), nth($colors, 1) $range, transparent $range, transparent $range * 4), //
+        repeating-radial-gradient(map-get(map-get($shapes, circle), bottom), nth($colors, 1), nth($colors, 1) $range, transparent $range, transparent $range * 4), //
+        repeating-radial-gradient(map-get(map-get($shapes, circle), left), nth($colors, 1), nth($colors, 1) $range, transparent $range, transparent $range * 4), //
+        linear-gradient(map-get(map-get($path, to), south), transparent, nth($colors, 2));
+    }
+    &14 {
+        $colors: #fbffd9, #c2fbff, #ffe4f4;
+        $range: 6px;
+        $draw: nth($colors, 1), nth($colors, 1) $range, nth($colors, 2) $range, nth($colors, 2) $range * 2, nth($colors, 3) $range * 2, nth($colors, 3) $range * 3;
+        $shapes: map-get(map-get($shapes, circle), center);
+        @include background-repeating-radial-gradient($shapes, $draw);
+        @include animation(demo14, 0.5s, ease, 0s, infinite, normal, none, running);
+        @keyframes demo14 {
+            0% {
+                $draw: nth($colors, 1), nth($colors, 1) $range, nth($colors, 2) $range, nth($colors, 2) $range * 2, nth($colors, 3) $range * 2, nth($colors, 3) $range * 3;
+                @include background-repeating-radial-gradient($shapes, $draw);
+            }
+            33% {
+                $draw: nth($colors, 3), nth($colors, 3) $range, nth($colors, 1) $range, nth($colors, 1) $range * 2, nth($colors, 2) $range * 2, nth($colors, 2) $range * 3;
+                @include background-repeating-radial-gradient($shapes, $draw);
+            }
+            66% {
+                $draw: nth($colors, 2), nth($colors, 2) $range, nth($colors, 3) $range, nth($colors, 3) $range * 2, nth($colors, 1) $range * 2, nth($colors, 1) $range * 3;
+                @include background-repeating-radial-gradient($shapes, $draw);
+            }
+        }
+    }
+    &15 {
+        $color: rgba(121, 64, 255, 0.2);
+        $range: 8px;
+        $color: $color, $color $range, transparent $range, transparent $range * 2;
+        background: //
+        repeating-radial-gradient(map-get(map-get( $shapes, circle), north), $color), //
+        repeating-radial-gradient(map-get(map-get( $shapes, circle), south), $color);
+    }
+    &16 {
+        $colors: rgba(255, 255, 255, 0.5), #2c6296;
+        $range: 1px;
+        $pattem: nth($colors, 1), nth($colors, 1) $range, transparent $range, transparent $range * 12;
+        background: //
+        repeating-linear-gradient(15deg, $pattem), //
+        repeating-linear-gradient(-35deg, $pattem), //
+        nth($colors, 2);
+        box-shadow: 0 0 20px 25px nth($colors, 2) inset;
+    }
+}
+
+.line {
+    @include load-line(24px, translateX, 50px, 0.5s);
+    margin: 1em 0;
+}
